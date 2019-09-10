@@ -1,7 +1,7 @@
-var urlApi 		= "https://api.github.com/";
-var urlProject 	= "https://github.com/marcoantoni/programacaoII";
-var user = "";
-var repo = "";
+var urlApi 		= 'https://api.github.com/';
+var urlProject 	= 'https://github.com/marcoantoni/fundeb';
+var user = '';
+var repo = '';
 
 urlSplit(urlProject);
 
@@ -33,8 +33,6 @@ function convertTimeStamp(unixtimestamp){
 	return convdataTime;
 }
 
-console.log(urlApi + "repos/" + user + "/" + repo + "/stats/contributors");
-
 $.ajax({
 	type: "GET",
 	url: urlApi + "repos/" + user + "/" + repo + "/stats/contributors",
@@ -47,7 +45,6 @@ $.ajax({
 	})
 })
 .done(function(data) {
-	//console.log(data);
 	var totalCommits = 0;
 	var linhasAddSemana = [];
 	var linhasDelSemana = [];
@@ -106,12 +103,12 @@ $.ajax({
     	categories: semanas2
 	});
 
-	$("#totalCommits").append(totalCommits);
+	$('#totalCommits').append(totalCommits);
 })
 .fail(function() {
 	alert( "error" );
 })
-console.log(urlApi + "repos/" + user + "/" + repo + "/commits");
+
 $.ajax({
 	type: "GET",
 	url: urlApi + "repos/" + user + "/" + repo + "/commits",
@@ -135,59 +132,117 @@ $.ajax({
 		markup +="<td>"+data[key].commit.author.date+"</td>";
 		markup +="<td><a href='" + data[key].html_url + "'><span class='ls-ico-link'></span></a></td>";
 		
-        $("#resumoCommits tbody").append(markup);
-		console.log("nome " + data[key].commit.author.name);
-		console.log("date " + data[key].commit.author.date);
-		console.log("mensagem " + data[key].commit.message);
+        $('#resumoCommits tbody').append(markup);
 	});
 })
 
-/*console.log(urlApi + "repos/" + user + "/" + repo + "/stats/code_frequency");
+// busca todos os issues do repositório
+console.log(urlApi + "repos/" + user + "/" + repo + "/issues?state=all");
 $.ajax({
 	type: "GET",
-	url: urlApi + "repos/" + user + "/" + repo + "/stats/code_frequency",
+	url: urlApi + "repos/" + user + "/" + repo + "/issues?state=all",
 	contentType: "application/json",
-	dataType: "json",
-	data: JSON.stringify({
-		"content": "aGVsbG8=",
-		"encoding": "utf-8",
-		"x-requested-with": "xhr" 
-	})
+	dataType: "json"
 })
 .done(function(data) {
+	console.log("list issues");
+	$.each( data, function(key, value) {
+		var markup = '<tr>';
+		markup +='<td><a href="#" onclick="getIssue('+value.number+');">#'+value.number+' '+ value.title +'</a>';
+		if (value.state == 'open')
+			markup += ' <span class="ls-tag-primary">Aberto</span';
+		else if (value.state == 'closed')
+			markup += ' <span class="ls-tag-info">Fechado</span';
+		markup +='</td>';
+		markup +='<td>'+value.user.login+'</td>';
+		
+		markup +='</td>';
 
-	var myChart = Highcharts.chart('graphics', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Número de commits por semana'
-        },
-        xAxis: {
-            categories: []
-        },
-        yAxis: {
-            title: {
-                text: 'Número de linhas'
-            }
-        },
-        series: [{
-            name: 'Adicionadas',
-        }, {
-            name: 'Removidas',
-        }]
-    });
-
-	var semanas = [];
-	console.log(data);
-    //$.each( data, function( key, value ) {
-  //  	console.log("semana " + value['0']);
-    //	console.log("add " + value['1']);
-    //	console.log("del " + value['2']);
-	//});
-//	myChart.series[0].addPoint(data[key][1]);
-//	myChart.xAxis[0].update({
-  //  	categories: semanas
-	//});
+		$('#issues').append(markup);
+		console.log(value.body);
+	});
 })
-*/
+
+/**
+ * Description Busca os dados de um issue e preenche na tabela
+ * @param int issue           Id issue do GitHub.
+ */
+function getIssue(issue){
+	console.log(urlApi + "repos/" + user + "/" + repo + "/issues/"+issue);
+	$.ajax({
+		type: "GET",
+		url: urlApi + "repos/" + user + "/" + repo + "/issues/"+issue,
+		contentType: "application/json",
+		dataType: "json"
+	})
+	.done(function(data) {
+		console.log("list issues");
+		// limpando o conteudo do modal
+		$('#modalcontent').empty();
+		$('#tituloissue').empty();
+		
+		$('#tituloissue').append('#'+data.number+' ' +data.title + ' ' + data.created_at);
+			var markup = '<div class="ls-list">';
+				markup += '  <div class="ls-list-content ">';
+				markup += '    <div class="col-xs-12 col-md-6">';
+				markup += '      <span class="ls-list-label">Autor</span>';
+				markup += '      <strong>marcoantoni</strong>';
+				markup += '    </div>';
+				markup += '    <div class="col-xs-12 col-md-6">';
+				markup += '      <span class="ls-list-label">Criado</span>';
+				markup += '      <strong>'+data.created_at+'</strong>';
+				markup += '    </div>';
+				markup += '  </div>';
+				markup += '  <div class="ls-list-content ">';
+				markup += '    <div class="col-xs-12 col-md-12">';
+				markup += '      <span class="ls-list-label">Mensagem</span>';
+				markup += '      <p>'+data.body+'</p>';
+				markup += '    </div>';
+				markup += '  </div>';
+				markup += '</div>';
+			$('#modalcontent').append(markup);
+		locastyle.modal.open("#modalLarge");
+		console.log(data);
+	})
+
+	// get comentarios issue
+	$.ajax({
+		type: 'GET',
+		url: urlApi + 'repos/' + user + '/' + repo + '/issues/'+issue+'/comments',
+		contentType: 'application/json',
+		dataType: 'json',
+		data: JSON.stringify({
+			'content': 'aGVsbG8=',
+			'encoding': 'utf-8',
+			'x-requested-with': "xhr" 
+		})
+	})
+	.done(function(data) {
+		console.log("list issues");
+		$.each(data, function(key, value){
+			//var markup = '<p>' + value.user.login +'</p>';
+			//markup += '<p>' + value.body + '</p><hr>';
+
+			//$('#modalcontent').append( markup);
+			var markup = '<div class="ls-list">';
+				markup += '  <div class="ls-list-content ">';
+				markup += '    <div class="col-xs-12 col-md-6">';
+				markup += '      <span class="ls-list-label">Autor</span>';
+				markup += '      <strong>'+ value.user.login +'</strong>';
+				markup += '    </div>';
+				markup += '    <div class="col-xs-12 col-md-6">';
+				markup += '      <span class="ls-list-label">Criado</span>';
+				markup += '      <strong>'+value.created_at+'</strong>';
+				markup += '    </div>';
+				markup += '  </div>';
+				markup += '  <div class="ls-list-content ">';
+				markup += '    <div class="col-xs-12 col-md-12">';
+				markup += '      <span class="ls-list-label">Mensagem</span>';
+				markup += '      <p>'+value.body+'</p>';
+				markup += '    </div>';
+				markup += '  </div>';
+				markup += '</div>';
+			$('#modalcontent').append(markup);
+		});
+	})
+}
