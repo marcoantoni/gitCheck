@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="ls-theme-gold ls-html-nobg ">
+<html class="ls-theme-blue ls-html-nobg ">
 <head>
   <title>Dashboard</title>
 
@@ -53,14 +53,11 @@
   </div>
 
   <span class="ls-show-sidebar ls-ico-menu"></span>
-
-  <a href="/locawebstyle/documentacao/exemplos/painel1/pre-painel"  class="ls-go-next"><span class="ls-text">Voltar à lista de serviços</span></a>
-
   <!-- Nome do produto/marca com sidebar -->
     <h1 class="ls-brand-name">
       <a href="home" class="ls-ico-earth">
-        <small>Uma descrição ou outro nome</small>
-        O nome do Produto
+        <small>Acompanhamento de projetos</small>
+        GitCheck
       </a>
     </h1>
 
@@ -71,27 +68,11 @@
     <aside class="ls-sidebar">
 
   <div class="ls-sidebar-inner">
-      <a href="/locawebstyle/documentacao/exemplos/painel1/pre-painel"  class="ls-go-prev"><span class="ls-text">Voltar à lista de serviços</span></a>
-
-      <nav class="ls-menu">
-        <ul>
-           <li><a href="/locawebstyle/documentacao/exemplos/painel1/home" class="ls-ico-dashboard" title="Dashboard">Dashboard</a></li>
-           <li><a href="/locawebstyle/documentacao/exemplos/painel1/clients" class="ls-ico-users" title="Clientes">Clientes</a></li>
-           <li><a href="/locawebstyle/documentacao/exemplos/painel1/stats" class="ls-ico-stats" title="Relatórios da revenda">Relatórios da revenda</a></li>
-           <li>
-            <a href="#" class="ls-ico-cog" title="Configurações">Configurações</a>
-            <ul>
-              <li><a href="/locawebstyle/documentacao/exemplos/painel1/config-domain">Domínios da Revenda</a></li>
-              <li><a href="/locawebstyle/documentacao/exemplos/painel1/config-email">E-mail de Remetente</a></li>
-              <li><a href="/locawebstyle/documentacao/exemplos/painel1/config-aspect">Aparência</a></li>
-              <li><a href="/locawebstyle/documentacao/exemplos/painel1/config-answer">Atendimento</a></li>
-              <li><a href="/locawebstyle/documentacao/exemplos/painel1/config-api">Chave de acesso para API</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-
-
+    <nav class="ls-menu">
+      <ul>
+        <li><a href="/locawebstyle/documentacao/exemplos/painel1/home" class="ls-ico-dashboard" title="Dashboard">Dashboard</a></li>
+      </ul>
+    </nav>
   </div>
 </aside>
 
@@ -112,8 +93,7 @@
       <input type="url" name="url" id="url" placeholder="URL do repositório" required >
     </label>
     <div class="ls-actions-btn">
-      <button class="ls-btn" id="buscar">Buscar</button>
-      <button class="ls-btn-danger">Cancelar</button>
+      <button class="ls-btn ls-btn-primary" id="buscar">Buscar</button>
     </div>
   </form>
 
@@ -126,7 +106,7 @@
         </div>
         <div class="ls-box-body">
           <span class="ls-board-data">
-            <strong id="lastcommit"></strong>
+            <strong class="ls-color-theme" id="lastcommit"></strong>
           </span>
         </div>
       </div>
@@ -139,7 +119,7 @@
         </div>
         <div class="ls-box-body">
           <span class="ls-board-data">
-            <strong id="totalCommits"></strong>
+            <strong class="ls-color-theme" id="totalCommits"></strong>
           </span>
         </div>
         <div class="ls-box-footer">
@@ -153,10 +133,8 @@
         <div class="ls-box-head">
           <h6 class="ls-title-4"><span class="ls-ico-users"></span> Contribuidores</h6>
         </div>
-        <div class="ls-box-body" id="contribuidores">
-         <!-- <span class="ls-board-data" >
-            <--<strong id="contribuidores"></strong>-
-          </span>-->
+        <div class="ls-box-body">
+          <strong class="ls-color-theme" id="contribuidores"></strong>
         </div>
       </div>
     </div>
@@ -168,9 +146,7 @@
         </div>
         <div class="ls-box-body">
           <span class="ls-board-data">
-            <strong id="totalBranchs">1</strong>
-            <!--<strong class="ls-color-theme">81%</strong>
-            <small>989.257</small>-->
+            <strong class="ls-color-theme" id="totalBranchs">1</strong>
           </span>
         </div>
       </div>
@@ -247,8 +223,8 @@
         <div class="ls-modal-body" id="issuesinfo"></div>
         <div class="ls-modal-body" id="modalcontent"></div>
         <div class="ls-modal-footer">
-          <button class="ls-btn ls-float-right" data-dismiss="modal">Close</button>
-          <button type="submit" class="ls-btn-primary">Save changes</button>
+          <button class="ls-btn ls-float-right" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="ls-btn-primary disabled">Salvar</button>
         </div>
       </div>
     </div>
