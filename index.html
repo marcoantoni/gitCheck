@@ -36,7 +36,7 @@
     <!-- Dropdown com detalhes da conta de usuário -->
     <div data-ls-module="dropdown" class="ls-dropdown ls-user-account">
       <a href="#" class="ls-ico-user">
-        <img src="/locawebstyle/assets/images/locastyle/avatar-example.jpg" alt="" />
+        <img src="https://avatars2.githubusercontent.com/u/1007746?v=4" alt="" />
         <span class="ls-name">João Kennedy</span>
         (johnkennedy)
       </a>
@@ -104,18 +104,18 @@
 <div class="ls-box ls-board-box">
   <header class="ls-info-header">
     <p class="ls-float-right ls-float-none-xs ls-small-info">Valido até <strong>01.05.2014</strong></p>
-    <h2 class="ls-title-3">Resumo do trabalho</h2>
+    <h2 class="ls-title-3" id="repoName">Resumo do trabalho</h2>
   </header>
   <form action="#" class="ls-form ls-form-inline row">
-      <label class="ls-label col-md-5">
-        <b class="ls-label-text">URL</b>
-        <input type="url" name="url" id="url" placeholder="URL do repositório" required >
-      </label>
-      <div class="ls-actions-btn">
-        <button class="ls-btn" id="buscar">Buscar</button>
-        <button class="ls-btn-danger">Cancelar</button>
-      </div>
-    </form>
+    <label class="ls-label col-md-5">
+      <b class="ls-label-text">URL</b>
+      <input type="url" name="url" id="url" placeholder="URL do repositório" required >
+    </label>
+    <div class="ls-actions-btn">
+      <button class="ls-btn" id="buscar">Buscar</button>
+      <button class="ls-btn-danger">Cancelar</button>
+    </div>
+  </form>
 
   <div id="sending-stats" class="row">
 
@@ -208,88 +208,44 @@
         </table>
       </div>
     </div>
-  </div>
-</div>
-<!--
-<div class="ls-box">
-<div class="row">
-  <div class="col-md-6">
-    <div class="ls-box">
-      <header class="ls-info-header">
-        <h2 class="ls-title-3">Clientes que mais contrataram</h2>
-        <a href="#" class="ls-btn ls-btn-sm">Ver todos</a>
-      </header>
-      <table class="ls-table">
-        <thead>
-          <th>Nome do cliente</th>
-          <th>Data de expiração</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td><a href="/locawebstyle/documentacao/exemplos/painel1/client">João da Silva</a> </td>
-            <td>10.04.2014</td>
-          </tr>
-          <tr>
-            <td><a href="/locawebstyle/documentacao/exemplos/painel1/client">João da Silva</a> </td>
-            <td>10.04.2014</td>
-          </tr>
-          <tr>
-            <td><a href="/locawebstyle/documentacao/exemplos/painel1/client">João da Silva</a> </td>
-            <td>10.04.2014</td>
-          </tr>
-        </tbody>
-      </table>
+    <div data-ls-module="collapse" data-target="#accordeon2" class="ls-collapse ">
+      <a href="#" class="ls-title-3 ls-collapse-header">
+        <h3 class="ls-collapse-title">Issues</h3>
+      </a>
+      <div class="ls-collapse-body" id="accordeon2">
+        <table class="ls-table ls-bg-header" id="issues">
+          <thead>
+            <tr>
+              <th>Issue</th>
+              <th>Mensagem</th>
+              <th>Data de criação </th>
+              <th>Visualizar mudanças</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
     </div>
-
-    <div class="ls-box">
-      <a href="#" class="ls-lnk-nav ls-ico-chevron-right">Política da conta</a>
-    </div>
-
-  </div>
-  <div class="col-md-6">
-    <div class="ls-box">
-      <header class="ls-info-header">
-        <h2 class="ls-title-3">Clientes bloqueados por bounce</h2>
-        <a href="/locawebstyle/documentacao/exemplos/painel1/clients" class="ls-btn ls-btn-sm">Ver todos</a>
-      </header>
-
-      <table class="ls-table">
-        <thead>
-          <th>Nome do cliente</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td><a href="/locawebstyle/documentacao/exemplos/painel1/client">João da Silva</a> </td>
-          </tr>
-          <tr>
-            <td><a href="/locawebstyle/documentacao/exemplos/painel1/client">João da Silva</a> </td>
-          </tr>
-          <tr>
-            <td><a href="/locawebstyle/documentacao/exemplos/painel1/client">João da Silva</a> </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="ls-box">
-      <a href="#" class="ls-lnk-nav ls-ico-chevron-right">Política de bounce</a>
+    <div data-ls-module="collapse" data-target="#accordeon3" class="ls-collapse ">
+      <a href="#" class="ls-title-3 ls-collapse-header">
+        <h3 class="ls-collapse-title">Acompanhamento por usuario</h3>
+      </a>
+      <div class="ls-collapse-body" id="accordeon2">
+        <div id="graphics2"></div>
+      </div>
     </div>
   </div>
 </div>
 
-
-    </div>
--->
-    <button data-ls-module="modal" data-target="#modalLarge" class="ls-btn-primary">Ative a modal grande</button>
     <div class="ls-modal" id="modalLarge">
       <div class="ls-modal-large">
         <div class="ls-modal-header">
           <button data-dismiss="modal">&times;</button>
-          <h4 class="ls-modal-title">Modal title</h4>
+          <h4 class="ls-modal-title" id="tituloissue"></h4>
         </div>
-        <div class="ls-modal-body">
-          <iframe style="border: 0px; " src="https://github.com/AndreaInfUFSM/elc117-2019a/commit/c8074361eab3c198b9f766a81c8159b0d3b29f20" width="100%" height="100%"></iframe>
-        </div>
+        <div class="ls-modal-body" id="issuesinfo"></div>
+        <div class="ls-modal-body" id="modalcontent"></div>
         <div class="ls-modal-footer">
           <button class="ls-btn ls-float-right" data-dismiss="modal">Close</button>
           <button type="submit" class="ls-btn-primary">Save changes</button>
