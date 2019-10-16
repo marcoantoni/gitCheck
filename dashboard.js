@@ -6,6 +6,7 @@ var repo = '';
 $( "#buscar" ).click(function(evt) {
  	alert( "Handler for .blur() called." );
   	evt.preventDefault();
+  	limparDados();
   	urlProject = $("#url").val();
 
 	urlSplit(urlProject);
@@ -48,7 +49,7 @@ $( "#buscar" ).click(function(evt) {
 	            type: 'line'
 	        },
 	        title: {
-	            text: 'Dados do GitHub'
+	            text: 'Estatistícas gerais do projeto'
 	        },
 	        yAxis: {
 	            title: {
@@ -199,6 +200,7 @@ function convertDate(data){
  * @param int issue           Id issue do GitHub.
  */
 function getIssue(issue){
+ console.log("issue " + urlApi + 'repos/' + user + '/' + repo + '/issues/'+issue)
 	
 	$.ajax({
 		type: 'GET',
@@ -211,27 +213,26 @@ function getIssue(issue){
 		$('#modalcontent').empty();
 		$('#tituloissue').empty();
 		
-		$('#tituloissue').append('#'+data.number+' ' +data.title + ' ' + data.created_at);
+		$('#tituloissue').append('#'+data.number+' ' +data.title);
 			var markup = '<div class="ls-list">';
 				markup += '  <div class="ls-list-content ">';
 				markup += '    <div class="col-xs-12 col-md-6">';
-				markup += '      <span class="ls-list-label">Autor</span>';
-				markup += '      <strong>marcoantoni</strong>';
+				markup += '      <span class="ls-list-label"><strong>Autor</strong></span>';
+				markup += '      marcoantoni';
 				markup += '    </div>';
 				markup += '    <div class="col-xs-12 col-md-6">';
-				markup += '      <span class="ls-list-label">Criado</span>';
-				markup += '      <strong>'+data.created_at+'</strong>';
+				markup += '      <span class="ls-list-label"><strong>Criado</strong></span>';
+				markup +=  	 	    convertDate(data.created_at);
 				markup += '    </div>';
 				markup += '  </div>';
 				markup += '  <div class="ls-list-content ">';
 				markup += '    <div class="col-xs-12 col-md-12">';
-				markup += '      <span class="ls-list-label">Mensagem</span>';
+				markup += '      <span class="ls-list-label"><strong>Mensagem</strong></span>';
 				markup += '      <p>'+data.body+'</p>';
 				markup += '    </div>';
 				markup += '  </div>';
 				markup += '</div>';
 			$('#modalcontent').append(markup);
-		locastyle.modal.open('#modalLarge');
 	})
 
 	// get comentarios issue
@@ -242,27 +243,46 @@ function getIssue(issue){
 		dataType: 'json'
 	})
 	.done(function(data) {
-		console.log("list issues");
-		$.each(data, function(key, value){
-			var markup = '<div class="ls-list">';
-				markup += '  <div class="ls-list-content ">';
-				markup += '    <div class="col-xs-12 col-md-6">';
-				markup += '      <span class="ls-list-label">Autor</span>';
-				markup += '      <strong>'+ value.user.login +'</strong>';
-				markup += '    </div>';
-				markup += '    <div class="col-xs-12 col-md-6">';
-				markup += '      <span class="ls-list-label">Criado</span>';
-				markup += '      <strong>'+value.created_at+'</strong>';
-				markup += '    </div>';
-				markup += '  </div>';
-				markup += '  <div class="ls-list-content ">';
-				markup += '    <div class="col-xs-12 col-md-12">';
-				markup += '      <span class="ls-list-label">Mensagem</span>';
-				markup += '      <p>'+value.body+'</p>';
-				markup += '    </div>';
-				markup += '  </div>';
-				markup += '</div>';
-			$('#modalcontent').append(markup);
-		});
+		if (data.length == 0){
+			console.log("Não há comentário para esse issue");
+		} else {
+			$.each(data, function(key, value){
+				var markup = '<div class="ls-list">';
+					markup += '  <div class="ls-list-content ">';
+					markup += '    <div class="col-xs-12 col-md-6">';
+					markup += '      <span class="ls-list-label"><strong>Autor</strong></span>';
+					markup += 			 value.user.login;
+					markup += '    </div>';
+					markup += '    <div class="col-xs-12 col-md-6">';
+					markup += '      <span class="ls-list-label"><strong>Criado</strong></span>';
+					markup += 			convertDate(value.created_at);
+					markup += '    </div>';
+					markup += '  </div>';
+					markup += '  <div class="ls-list-content ">';
+					markup += '    <div class="col-xs-12 col-md-12">';
+					markup += '      <span class="ls-list-label"><strong>Mensagem</strong></span>';
+					markup += '      <p>'+value.body+'</p>';
+					markup += '    </div>';
+					markup += '  </div>';
+					markup += '</div>';
+				$('#modalcontent').append(markup);
+			});
+		}
+		// exibindo modal somente apos buscar os comentarios
+		locastyle.modal.open('#modalLarge');
 	})
+}
+
+function limparDados(){
+	// limpando cards
+	$('#lastcommit').empty();
+	$('#totalCommits').empty();
+	$('#contribuidores').empty();
+	
+	// limpando acordeon commits
+	$('#resumoCommits tbody').empty();
+
+	// limpando o conteudo do modal
+	$('#modalcontent').empty();
+	$('#tituloissue').empty();
 }
