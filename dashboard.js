@@ -3,21 +3,20 @@ var urlProject 	= 'https://github.com/jviriato/acg-front/';
 var user = '';
 var repo = '';
 
-$( "#buscar" ).click(function(evt) {
- 	alert( "Handler for .blur() called." );
+$( '#buscar' ).click(function(evt) {
   	evt.preventDefault();
   	limparDados();
-  	urlProject = $("#url").val();
+  	urlProject = $('#url').val();
 
 	urlSplit(urlProject);
 
 	// estatiscas do repositorio
 	// pega a quantidade total de commits por usuario e linhas add/rem por semana
 	$.ajax({
-		type: "GET",
-		url: urlApi + "repos/" + user + "/" + repo + "/stats/contributors",
-		contentType: "application/json",
-		dataType: "json"
+		type: 'GET',
+		url: urlApi + 'repos/' + user + '/' + repo + '/stats/contributors',
+		contentType: 'application/json',
+		dataType: 'json'
 	})
 	.done(function(data) {
 		var totalCommits = 0;
@@ -25,7 +24,17 @@ $( "#buscar" ).click(function(evt) {
 		var linhasDelSemana = [];
 		var commitsSemana = [];
 		var semanas = [];
+
+		var contribuidores = [];
+
+		// add login e foto do github
+		$('#img_user').attr('src', data[0].author.avatar_url);
+		$('#login').append(data[0].author.login);
+
 		$.each( data, function( key, value ) {
+			// adicionando os contribuidores ao array
+			contribuidores.push( data[key].author['login']);
+
 			totalCommits += data[key].total;
 			$('#contribuidores').append("<p>" + data[key].author['login'] + " (" + data[key].total + ")</p>" );
 
@@ -49,28 +58,7 @@ $( "#buscar" ).click(function(evt) {
 	            type: 'line'
 	        },
 	        title: {
-	            text: 'Estatistícas gerais do projeto'
-	        },
-	        yAxis: {
-	            title: {
-	                text: 'Estatistícas'
-	            }
-	        },
-	        series: [{
-	            name: 'Linhas adicionadas',
-	        }, {
-	            name: 'Linhas removidas',
-	        }, {
-	        	name: 'Commits'
-	        }]
-	    });
-
-	var myChart2 = Highcharts.chart('graphics2', {
-	        chart: {
-	            type: 'line'
-	        },
-	        title: {
-	            text: 'Dados do GitHub2'
+	            text: 'Acompanhamento geral do projeto'
 	        },
 	        yAxis: {
 	            title: {
@@ -104,6 +92,25 @@ $( "#buscar" ).click(function(evt) {
 	})
 	.fail(function() {
 		alert( "error" );
+		return;
+	})
+
+	// busca a quantidade de branches do repositorio
+	$.ajax({
+		type: 'GET',
+		url: urlApi + 'repos/' + user + '/' + repo + '/branches',
+		contentType: 'application/json',
+		dataType: 'json'
+	})
+	.done(function(data) {
+		var totalBranchs = data.length;
+		// exibindo a quantidade de branches
+		$('#totalBranchs').append(totalBranchs);
+		$.each( data, function(key, value) {
+			// exibindo o nome de cada branch, seperados por virgula
+			$('#branchsname').append(value.name);
+			if (totalBranchs > 1 && key != (totalBranchs-1) ) $('#branchsname').append(', ');
+		});
 	})
 
 	// listando resumo dos commits
@@ -116,11 +123,11 @@ $( "#buscar" ).click(function(evt) {
 	.done(function(data) {	
 		$('#lastcommit').append(convertDate(data[0].commit.author.date) );
 		$.each( data, function(key, value) {
-			var markup = "<tr>";
-			markup +="<td>"+data[key].commit.author.name+"</td>";
-			markup +="<td>"+data[key].commit.message+"</td>";
-			markup +="<td>"+ convertDate(data[key].commit.author.date)+"</td>";
-			markup +="<td><a href='" + data[key].html_url + "'><span class='ls-ico-link'></span></a></td></tr>";
+			var markup = '<tr>';
+			markup +='<td>'+data[key].commit.author.name+'</td>';
+			markup +='<td>'+data[key].commit.message+'</td>';
+			markup +='<td>'+ convertDate(data[key].commit.author.date)+'</td>';
+			markup +='<td><a href="' + data[key].html_url + '"><span class="ls-ico-link"></span></a></td></tr>';
 			
 	        $('#resumoCommits tbody').append(markup);
 		});
@@ -128,13 +135,12 @@ $( "#buscar" ).click(function(evt) {
 
 	// busca todos os issues do repositório
 	$.ajax({
-		type: "GET",
-		url: urlApi + "repos/" + user + "/" + repo + "/issues?state=all",
-		contentType: "application/json",
-		dataType: "json"
+		type: 'GET',
+		url: urlApi + 'repos/' + user + '/' + repo + '/issues?state=all',
+		contentType: 'application/json',
+		dataType: 'json'
 	})
 	.done(function(data) {
-		console.log("list issues");
 		$.each( data, function(key, value) {
 			var markup = '<tr>';
 			markup +='<td><a href="#" onclick="getIssue('+value.number+');">#'+value.number+' '+ value.title +'</a>';
@@ -150,8 +156,8 @@ $( "#buscar" ).click(function(evt) {
 			$('#issues').append(markup);
 		});
 	})
-	
 });
+
 
 function urlSplit(url){
 	var segments = url.split('/');
@@ -184,10 +190,7 @@ function convertTimeStamp(unixtimestamp){
 	// Minutes
 	var minutes = "0" + date.getMinutes();
 
-	return day + '/' + month+ '/' + year;// + ' às ' + hours + ':' + minutes;
-	 
-	//console.log(day + '/' + month+ '/' + year + ' às ' + hours + ':' + minutes);
-	//return day + '/' + month+ '/' +year;
+	return day + '/' + month+ '/' + year;
 }
 
 function convertDate(data){
@@ -200,8 +203,6 @@ function convertDate(data){
  * @param int issue           Id issue do GitHub.
  */
 function getIssue(issue){
- console.log("issue " + urlApi + 'repos/' + user + '/' + repo + '/issues/'+issue)
-	
 	$.ajax({
 		type: 'GET',
 		url: urlApi + 'repos/' + user + '/' + repo + '/issues/'+issue,
@@ -278,6 +279,8 @@ function limparDados(){
 	$('#lastcommit').empty();
 	$('#totalCommits').empty();
 	$('#contribuidores').empty();
+	$('#totalBranchs').empty();
+	$('#branchsname').empty();
 	
 	// limpando acordeon commits
 	$('#resumoCommits tbody').empty();
@@ -285,4 +288,8 @@ function limparDados(){
 	// limpando o conteudo do modal
 	$('#modalcontent').empty();
 	$('#tituloissue').empty();
+	$('#issues').empty();
+
+	// limpando nome do usuário
+	$('#login').empty();
 }

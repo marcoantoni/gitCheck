@@ -27,26 +27,24 @@
   <div class="ls-notification-topbar">
 
     <!-- Links de apoio -->
+    <!--
     <div class="ls-alerts-list">
       <a href="#" class="ls-ico-bell-o" data-counter="8" data-ls-module="topbarCurtain" data-target="#ls-notification-curtain"><span>Notificações</span></a>
       <a href="#" class="ls-ico-bullhorn" data-ls-module="topbarCurtain" data-target="#ls-help-curtain"><span>Ajuda</span></a>
       <a href="#" class="ls-ico-question" data-ls-module="topbarCurtain" data-target="#ls-feedback-curtain"><span>Sugestões</span></a>
     </div>
+  -->
 
     <!-- Dropdown com detalhes da conta de usuário -->
     <div data-ls-module="dropdown" class="ls-dropdown ls-user-account">
       <a href="#" class="ls-ico-user">
-        <img src="https://avatars2.githubusercontent.com/u/1007746?v=4" alt="" />
-        <span class="ls-name">João Kennedy</span>
-        (johnkennedy)
+        <img id="img_user" src="" alt="" />
+        <span class="ls-name" id="login"></span>
       </a>
 
       <nav class="ls-dropdown-nav ls-user-menu">
         <ul>
-          <li><a href="#">Meus dados</a></li>
-          <li><a href="#">Faturas</a></li>
-          <li><a href="#">Planos</a></li>
-          <li><a href="#">Sair</a></li>
+          <li><a href="#">Alterar tema</a></li>
          </ul>
       </nav>
     </div>
@@ -70,7 +68,7 @@
   <div class="ls-sidebar-inner">
     <nav class="ls-menu">
       <ul>
-        <li><a href="/locawebstyle/documentacao/exemplos/painel1/home" class="ls-ico-dashboard" title="Dashboard">Dashboard</a></li>
+        <li><a href="index.html" class="ls-ico-dashboard" title="Dashboard">Dashboard</a></li>
       </ul>
     </nav>
   </div>
@@ -80,7 +78,7 @@
 
   <main class="ls-main ">
     <div class="container-fluid">
-      <h1 class="ls-title-intro ls-ico-dashboard">Dashboard</h1>
+      <h1 class="ls-title-intro ls-ico-dashboard">Visão geral</h1>
 
 <div class="ls-box ls-board-box">
   <header class="ls-info-header">
@@ -90,7 +88,7 @@
   <form action="#" class="ls-form ls-form-inline row">
     <label class="ls-label col-md-5">
       <b class="ls-label-text">URL</b>
-      <input type="url" name="url" id="url" placeholder="URL do repositório" required >
+      <input type="url" name="url" id="url" placeholder="https://github.com/marcoantoni/gitCheck" required >
     </label>
     <div class="ls-actions-btn">
       <button class="ls-btn ls-btn-primary" id="buscar">Buscar</button>
@@ -142,11 +140,12 @@
     <div class="col-sm-6 col-md-3">
       <div class="ls-box">
         <div class="ls-box-head">
-          <h6 class="ls-title-4 color-default">Branchs</h6>
+          <h6 class="ls-title-4 color-default"><span class="ls-ico-list3"></span> Branchs</h6>
         </div>
         <div class="ls-box-body">
           <span class="ls-board-data">
-            <strong class="ls-color-theme" id="totalBranchs">1</strong>
+            <strong class="ls-color-theme" id="totalBranchs"></strong>
+            <p id="branchsname"></p>
           </span>
         </div>
       </div>
@@ -208,7 +207,14 @@
         <h3 class="ls-collapse-title">Acompanhamento por usuario</h3>
       </a>
       <div class="ls-collapse-body" id="accordeon2">
-        <div id="graphics2"></div>
+        <table id="resumoUser">
+          <thread>
+            <th>Usuário</th>
+            <th>Semana</th>
+            <th>Estatísticas</th>
+          </thread> 
+          <tbody></tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -229,31 +235,7 @@
       </div>
     </div>
     <footer class="ls-footer" role="contentinfo">
-  <nav class="ls-footer-menu">
-      <h2 class="ls-title-footer">suporte e ajuda</h2>
-      <ul class="ls-footer-list">
-        <li>
-          <a href="#" target="_blank" class="bg-customer-support">
-            <span class="visible-lg">Atendimento</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" target="_blank" class="bg-my-tickets">
-            <span class="visible-lg">Meus Chamados</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" target="_blank" class="bg-help-desk">
-            <span class="visible-lg">Central de Ajuda (Wiki)</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" target="_blank" class="bg-statusblog">
-            <span class="visible-lg">Statusblog</span>
-          </a>
-        </li>
-      </ul>
-  </nav>
+
   <div class="ls-footer-info">
     <span class="last-access ls-ico-screen"><strong>Último acesso: </strong>99/99/9999 99:99:99</span>
     <div class="set-ip"><strong>IP:</strong> 000.00.00.000</div>
@@ -262,8 +244,7 @@
 </footer>
 
   </main>
-
-
+  <!--
   <aside class="ls-notification">
     <nav class="ls-notification-list" id="ls-notification-curtain">
       <h3 class="ls-title-2">Notificações</h3>
@@ -309,6 +290,7 @@
       </ul>
     </nav>
   </aside>
+  -->
 
   <script src="https://code.jquery.com/jquery-2.1.0.min.js" type="text/javascript"></script>
   <script src="http://opensource.locaweb.com.br/locawebstyle/assets/javascripts/example.js" type="text/javascript"></script>
