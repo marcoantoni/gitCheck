@@ -60,5 +60,5 @@ Entretanto, essa funcionalidade foi desativada devido a mudanças na API do GitH
 2. Abra a pasta do projeto
 3. Abra o arquivo `index.html` no navegador
 4. Informe o link de um repositório do GitHub (exemplo):
-``git clone https://github.com/marcoantoni/poo``
+``https://github.com/marcoantoni/poo``
 5. Clique em **Buscar**
